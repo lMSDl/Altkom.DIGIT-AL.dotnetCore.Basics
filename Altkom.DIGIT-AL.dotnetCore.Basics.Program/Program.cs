@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Altkom.DIGIT_AL.dotnetCore.Basics.Program.Models;
 using Altkom.DIGIT_AL.dotnetCore.Basics.Program.Services;
 using StructureMap;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
 {
@@ -54,21 +56,55 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
                 
         }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
+        {
+            
+
+
+            // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 1+1");
+            // var a = Sum(1, 1).Result;
+            
+            // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 2+2");
+            // var b = await Sum(1, 1);
+             
+            // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 5");
+            //     CounterAsync(5).Wait();
+            // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 7");
+            //     await CounterAsync(7);
+            // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 10");
+            //     _ = CounterAsync(10);
+            Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Stopping");
+            Console.ReadKey();
+        }
+
+        static async Task CounterAsync(int amount) {
+            Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Start counting {amount}");
+            await Task.Delay(amount*1000);
+            Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Stop counting {amount}");
+        }
+
+        static Task<int> Sum(int a, int b) {
+            return Task.FromResult(a+b);
+        }
+
+
+        private static void ConsoleApp()
         {
             Logger.LogTrace("Enter Main");
 
             System.AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
 
-            foreach(var service in ServiceProvider.GetServices<IConsoleWriteLineService>()) {
-                using(Logger.BeginScope($"Wyświetlanie wiadomości z serwisu {service.GetType().Name}")) {
-                        Logger.LogDebug($"Service says \"Hello\"");
-                        service.Execute("Hello");
-                        // if(service.GetType().Name == nameof(ConsoleWriteFiggleLineService)) {
-                        //     throw new Exception($"{service.GetType().Name} failed");
-                        // }
-                        Logger.LogDebug($"Service said \"Hello\"");
+            foreach (var service in ServiceProvider.GetServices<IConsoleWriteLineService>())
+            {
+                using (Logger.BeginScope($"Wyświetlanie wiadomości z serwisu {service.GetType().Name}"))
+                {
+                    Logger.LogDebug($"Service says \"Hello\"");
+                    service.Execute("Hello");
+                    // if(service.GetType().Name == nameof(ConsoleWriteFiggleLineService)) {
+                    //     throw new Exception($"{service.GetType().Name} failed");
+                    // }
+                    Logger.LogDebug($"Service said \"Hello\"");
                 }
             }
 
