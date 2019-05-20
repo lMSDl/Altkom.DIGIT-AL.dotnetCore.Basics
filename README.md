@@ -98,3 +98,41 @@ var serviceProvider = serviceCollection
       .BuildServiceProvider();
 var services = serviceProvider.GetServices<IService>();
 ```
+* StructureMap
+```
+dotnet add package Microsoft.Extensions.DependencyInjection
+```
+``` c#
+var serviceCollection = new ServiceCollection();
+var container = new Container();
+container.Configure(configurationExpression => {
+   configurationExpression.Scan(x => {
+      x.AssemblyContainingType(typeof(Program));
+      x.WithDefaultConventions();
+      x.AddAllTypesOf<IService>();
+   });
+   configurationExpression.Populate(serviceCollection);
+});
+var serviceProvider = container.GetInstance<IServiceProvider>();
+var services = serviceProvider.GetServices<IService>();
+```
+
+## Logowanie
+```
+dotnet add package Microsoft.Extensions.Logging
+dotnet add package Microsoft.Extensions.Logging.Configuration
+dotnet add package Microsoft.Extensions.Logging.Console
+dotnet add package Microsoft.Extensions.Logging.Debug
+```
+``` c#
+var serviceCollection = new ServiceCollection()
+   .AddLogging(builder => builder
+      .AddConsole()
+      .AddDebug()
+      .AddConfiguration(Config.GetSection("Logging")))
+   .Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Debug);
+var logger = ServiceProvider.GetService<ILogger<Program>>();
+logger.LogDebug("Hello");
+```
+* Plik konfiguracyjny
+[appsettings.json](Core.Basics.Program/appsettings.json)
