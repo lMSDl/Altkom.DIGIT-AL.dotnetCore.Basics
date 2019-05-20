@@ -1,1 +1,1 @@
-# Altkom.DIGIT-AL.dotnetCore.Basics
+Podstawy .NET Core 2.2
