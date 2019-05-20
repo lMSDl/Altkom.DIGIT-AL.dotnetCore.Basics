@@ -24,12 +24,22 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
             config.GetSection("Section").Bind(section);
 
             var serviceCollection = new ServiceCollection();
-            var serviceProvider = serviceCollection
+            /*var serviceProvider = serviceCollection
             .AddScoped<IConsoleWriteLineService, ConsoleWriteLineService>()
             .AddScoped<IConsoleWriteLineService, ConsoleWriteFiggleLineService>()
-            .BuildServiceProvider();
+            .BuildServiceProvider();*/
 
-            
+            var container = new Container();
+            container.Configure(configurationExpression => {
+                configurationExpression.Scan(x => {
+                    x.AssemblyContainingType(typeof(Program));
+                    x.AddAllTypesOf<IConsoleWriteLineService>();
+                    x.WithDefaultConventions();
+                });
+                configurationExpression.Populate(serviceCollection);
+            });
+            var serviceProvider = container.GetInstance<IServiceProvider>();
+
 
             foreach(var service in serviceProvider.GetServices<IConsoleWriteLineService>()) {
                 service.Execute("Hello");
