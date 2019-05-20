@@ -70,3 +70,31 @@ var config = new ConfigurationBuilder()
       .Build();
 var value = config["<KLUCZ>"];
 ```
+
+* Silne typowanie
+```
+dotnet add package Microsoft.Extensions.Configuration.Binder
+```
+``` c#
+var settings = new Settings();
+config.Bind(settings);
+```
+
+* Pliki
+  * [appsettings.json](Core.Basics.Program/appsettings.json)
+  * [appsettings.xml](Core.Basics.Program/appsettings.xml)
+  * [appsettings.ini](Core.Basics.Program/appsettings.ini)
+  * [appsettings.yaml](Core.Basics.Program/appsettings.yaml)
+  * [Settings.cs](Core.Basics.Program/Models/Settings.cs)
+
+## Wstrzykiwanie zależności
+```
+dotnet add package Microsoft.Extensions.DependencyInjection
+```
+``` c#
+var serviceCollection = new ServiceCollection();
+var serviceProvider = serviceCollection
+      .AddScoped<IService, Service>()
+      .BuildServiceProvider();
+var services = serviceProvider.GetServices<IService>();
+```
