@@ -21,7 +21,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
         static Section Section {get;} = new Section();
         static IServiceProvider ServiceProvider {get;}
 
-
+        static ILogger Logger {get;}
         static Program() {
             Config.Bind(Settings);
             Config.GetSection("Section").Bind(Section);
@@ -49,24 +49,38 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
                 configurationExpression.Populate(serviceCollection);
             });
             ServiceProvider = container.GetInstance<IServiceProvider>();
+            
+            Logger = ServiceProvider.GetService<ILogger<Program>>();
+                
         }
 
         static void Main(string[] args)
         {
-            var logger = ServiceProvider.GetService<ILogger<Program>>();
-                logger.LogTrace("Enter Main");
+            Logger.LogTrace("Enter Main");
 
-                foreach(var service in ServiceProvider.GetServices<IConsoleWriteLineService>()) {
-                    
-            using(logger.BeginScope($"Wyświetlanie wiadomości z serwisu {service.GetType().Name}")) {
-                    logger.LogDebug($"Service says \"Hello\"");
-                    service.Execute("Hello");
-                    logger.LogDebug($"Service said \"Hello\"");
-            }
+            System.AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
+
+            foreach(var service in ServiceProvider.GetServices<IConsoleWriteLineService>()) {
+                using(Logger.BeginScope($"Wyświetlanie wiadomości z serwisu {service.GetType().Name}")) {
+                        Logger.LogDebug($"Service says \"Hello\"");
+                        service.Execute("Hello");
+                        // if(service.GetType().Name == nameof(ConsoleWriteFiggleLineService)) {
+                        //     throw new Exception($"{service.GetType().Name} failed");
+                        // }
+                        Logger.LogDebug($"Service said \"Hello\"");
                 }
+            }
 
-            logger.LogTrace("Exit Main");
+            Logger.LogTrace("Exit Main");
             Console.ReadKey();
+        }
+
+        static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args) {
+            Logger.LogError(args.ExceptionObject.ToString());
+            
+            Console.ReadKey();
+            Environment.Exit(1);
         }
     }
 }
