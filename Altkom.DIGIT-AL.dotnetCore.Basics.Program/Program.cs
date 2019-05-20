@@ -73,6 +73,9 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
             foreach (var i in new[] { 1, 2, 3, 4 }.ToList())
                 await CounterAsync(i);
 
+            new[] {1, 2}.ToList().ForEach(async x => await CounterAsync(x));
+
+            new[] {3, 4}.ToList().AsParallel().ForAll(async x => await CounterAsync(x));
             // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 1+1");
             // var a = Sum(1, 1).Result;
 
