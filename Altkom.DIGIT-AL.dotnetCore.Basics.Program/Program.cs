@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Altkom.DIGIT_AL.dotnetCore.Basics.Program.Models;
 using Altkom.DIGIT_AL.dotnetCore.Basics.Program.Services;
-using Microsoft.Extensions.DependencyInjection;
 using StructureMap;
 
 namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
@@ -20,11 +21,17 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
         static Section Section {get;} = new Section();
         static IServiceProvider ServiceProvider {get;}
 
+
         static Program() {
             Config.Bind(Settings);
             Config.GetSection("Section").Bind(Section);
 
             var serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder => 
+                builder.AddConsole(x => x.IncludeScopes = false)
+                .AddDebug())
+                .Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Debug);
+
             /*var serviceProvider = serviceCollection
             .AddScoped<IConsoleWriteLineService, ConsoleWriteLineService>()
             .AddScoped<IConsoleWriteLineService, ConsoleWriteFiggleLineService>()
@@ -44,9 +51,20 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
 
         static void Main(string[] args)
         {
-            foreach(var service in ServiceProvider.GetServices<IConsoleWriteLineService>()) {
-                service.Execute("Hello");
+            var logger = ServiceProvider.GetService<ILogger<Program>>();
+                logger.LogTrace("Enter Main");
+
+                foreach(var service in ServiceProvider.GetServices<IConsoleWriteLineService>()) {
+                    
+            using(logger.BeginScope($"Wyświetlanie wiadomości z serwisu {service.GetType().Name}")) {
+                    logger.LogDebug($"Service says \"Hello\"");
+                    service.Execute("Hello");
+                    logger.LogDebug($"Service said \"Hello\"");
             }
+                }
+
+            logger.LogTrace("Exit Main");
+            Console.ReadKey();
         }
     }
 }
