@@ -23,7 +23,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
             var section = new Section();
             config.GetSection("Section").Bind(section);
 
-            //var serviceCollection = new ServiceCollection();
+            var serviceCollection = new ServiceCollection();
             var serviceProvider = serviceCollection
             .AddScoped<IConsoleWriteLineService, ConsoleWriteLineService>()
             .AddScoped<IConsoleWriteLineService, ConsoleWriteFiggleLineService>()
