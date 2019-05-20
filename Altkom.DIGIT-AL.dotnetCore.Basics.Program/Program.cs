@@ -9,19 +9,20 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            var config = new ConfigurationBuilder()
+        static IConfiguration Config {get;} = new ConfigurationBuilder()
             .AddJsonFile("configapp.json", optional: true, reloadOnChange: true)
             //.AddIniFile("configapp.ini", optional: true, reloadOnChange: true)
             //.AddXmlFile("configapp.xml", optional: true, reloadOnChange: true)
             //.AddYamlFile("configapp.yaml", optional: true, reloadOnChange: true)
             .Build();
 
-            var settings = new Settings();
-            config.Bind(settings);
-            var section = new Section();
-            config.GetSection("Section").Bind(section);
+        static Settings Settings {get;} = new Settings();
+        static Section Section {get;} = new Section();
+        static IServiceProvider ServiceProvider {get;}
+
+        static Program() {
+            Config.Bind(Settings);
+            Config.GetSection("Section").Bind(Section);
 
             var serviceCollection = new ServiceCollection();
             /*var serviceProvider = serviceCollection
@@ -38,10 +39,12 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
                 });
                 configurationExpression.Populate(serviceCollection);
             });
-            var serviceProvider = container.GetInstance<IServiceProvider>();
+            ServiceProvider = container.GetInstance<IServiceProvider>();
+        }
 
-
-            foreach(var service in serviceProvider.GetServices<IConsoleWriteLineService>()) {
+        static void Main(string[] args)
+        {
+            foreach(var service in ServiceProvider.GetServices<IConsoleWriteLineService>()) {
                 service.Execute("Hello");
             }
         }
