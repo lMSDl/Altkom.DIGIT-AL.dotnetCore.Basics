@@ -31,25 +31,25 @@ dotnet run [PARAMETRY]
   ```
   * Self-contained deployments (SCD)
   ```
-  dotnet publish -c Release -r <IDENTYFIKATOR_ŒRODOWISKA_URUCHOMIENIOWEGO>
+  dotnet publish -c Release -r <IDENTYFIKATOR_ÅšRODOWISKA_URUCHOMIENIOWEGO>
   ```
   * Framework-dependent executables (FDE)
   ```
-  dotnet publish -c Release -r <IDENTYFIKATOR_ŒRODOWISKA_URUCHOMIENIOWEGO> --self-contained false
+  dotnet publish -c Release -r <IDENTYFIKATOR_ÅšRODOWISKA_URUCHOMIENIOWEGO> --self-contained false
   ```
 
 * Pakiety i referencje
-  * Dodawanie pakietów
+  * Dodawanie pakietÃ³w
   ```
   dotnet add package <NAZWA_PAKIETU>
   ```
-  * Pobranie pakietów
+  * Pobranie pakietÃ³w
   ```
   dotnet restore
   ```
   * Dodawanie referencji
   ```
-  dotnet add reference <ŒCIE¯KA_PROJEKTU>
+  dotnet add reference <ÅšCIEÅ»KA_PROJEKTU>
   ```
 
 ## Pobieranie konfiguracji z pliku
