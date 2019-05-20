@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,15 +59,26 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
 
         static async Task Main(string[] args)
         {
-            
+            ConsoleTest();
 
+            await TaskTests();
+                        
+            Console.ReadKey();
+        }
+
+        private static async Task TaskTests()
+        {
+            //await Task.WhenAll(new Task[] {CounterAsync(10), CounterAsync(5)});
+
+            foreach (var i in new[] { 1, 2, 3, 4 }.ToList())
+                await CounterAsync(i);
 
             // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 1+1");
             // var a = Sum(1, 1).Result;
-            
+
             // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 2+2");
             // var b = await Sum(1, 1);
-             
+
             // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 5");
             //     CounterAsync(5).Wait();
             // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 7");
@@ -74,7 +86,6 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
             // Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Starting 10");
             //     _ = CounterAsync(10);
             Logger.LogDebug($"{Thread.CurrentThread.ManagedThreadId} - Stopping");
-            Console.ReadKey();
         }
 
         static async Task CounterAsync(int amount) {
@@ -88,7 +99,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
         }
 
 
-        private static void ConsoleApp()
+        private static void ConsoleTest()
         {
             Logger.LogTrace("Enter Main");
 
