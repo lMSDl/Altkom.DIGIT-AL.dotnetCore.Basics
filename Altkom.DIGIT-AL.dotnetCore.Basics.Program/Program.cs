@@ -28,9 +28,11 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
 
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddLogging(builder => 
-                builder.AddConsole(x => x.IncludeScopes = false)
-                .AddDebug())
-                .Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Debug);
+                builder.AddConsole()
+                //builder.AddConsole(x => x.IncludeScopes = false)
+                .AddDebug()
+                .AddConfiguration(Config.GetSection("Logging")));
+                //.Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Debug);
 
             /*var serviceProvider = serviceCollection
             .AddScoped<IConsoleWriteLineService, ConsoleWriteLineService>()
