@@ -1,3 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <configuration>
-    <HelloXml>from Xml</HelloXml>
+    <Section>
+        <Key1>Hello</Key1>
+        <Key2>Bye</Key2>
+    <Subsection>
+        <Key1>from Xml</Key1>
+    </Subsection>
+    </Section>
 </configuration>
