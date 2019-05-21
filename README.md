@@ -8,7 +8,7 @@
   ```
   * WebAPI
   ```
-  dotnet new webapi [-o <LOKALIZACJA> -n <NAZWA_PROEKTU>] [--no-hhtps]
+  dotnet new webapi [-o <LOKALIZACJA> -n <NAZWA_PROEKTU>] [--no-https]
   ```
   * biblioteki
   ```
