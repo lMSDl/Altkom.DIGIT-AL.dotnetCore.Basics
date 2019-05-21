@@ -21,7 +21,7 @@ dotnet build
 dotnet <NAZWA_PROJEKTU>.dll [<PARAMETRY>]
 ```
 ```
-dotnet run [PARAMETRY]
+dotnet [watch] run [PARAMETRY]
 ```
 
 * Publikacja
@@ -159,3 +159,31 @@ services.AddMvc().AddXmlSerializerFormatters();
 [ApiController]
 ```
 
+* Obsługa błędów
+``` c#
+public class ErrorDetails
+{
+   public int StatusCode { get; set; }
+   public string Message { get; set; }
+}
+```
+``` c#
+app.UseExceptionHandler(appError =>
+{
+   appError.Run(async context =>
+   {
+      context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+      context.Response.ContentType = "application/json";
+
+      var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+      if(contextFeature != null)
+      {
+         await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDetails()
+         {
+            StatusCode = context.Response.StatusCode,
+            Message = contextFeature.Error.Message
+         }));
+      }
+   });
+});
+```
