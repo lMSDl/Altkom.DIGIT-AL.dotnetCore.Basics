@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices;
 using Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices.Models;
 using Altkom.DIGIT_AL.dotnetCore.Basics.IServices;
+using Altkom.DIGIT_AL.dotnetCore.Basics.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
@@ -14,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI
@@ -53,12 +58,25 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
+                app.UseMiddleware<ExceptionMiddleware>();
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                // app.UseExceptionHandler(appError => {
+                //     appError.Run(async context => {
+                //         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                //         context.Response.ContentType = "application/json";
+                //         var contextFeatures = context.Features.Get<IExceptionHandlerFeature>();
+                //         if(contextFeatures != null) {
+                //             await context.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorDetails{
+                //                 StatusCode = context.Response.StatusCode,
+                //                 Message = contextFeatures.Error.Message} ));
+                //         }
+                //     });
+                // });
             }
             app.UseHttpsRedirection();
             app.UseMvc();
