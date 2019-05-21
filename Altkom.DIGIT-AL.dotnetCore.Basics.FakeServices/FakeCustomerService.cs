@@ -4,9 +4,9 @@ using Bogus;
 
 namespace Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices
 {
-    public class FakeCustomerService : FakeBaseService<Customer>, ICustomerService
+    public class FakeCustomersService : FakeBaseService<Customer>, ICustomersService
     {
-        public FakeCustomerService(Faker<Customer> faker, int count) : base(faker, count)
+        public FakeCustomersService(Faker<Customer> faker, int count) : base(faker, count)
         {
         }
     }

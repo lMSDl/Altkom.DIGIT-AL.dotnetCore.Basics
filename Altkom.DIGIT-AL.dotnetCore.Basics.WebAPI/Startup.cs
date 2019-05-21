@@ -39,8 +39,13 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI
             })
             .AddXmlSerializerFormatters();
 
-            services.AddSingleton<CustomerFaker>();
-            services.AddSingleton<ICustomerService>(x => new FakeCustomerService(x.GetService<CustomerFaker>(), 10));
+            services.AddSingleton<CustomerFaker>()
+            .AddSingleton<ProductFaker>()
+            .AddSingleton<ICustomersService>(x => new FakeCustomersService(x.GetService<CustomerFaker>(), int.Parse(Configuration["FakerCount"])))
+            .AddSingleton<IProductsService>(x => new FakeProductsService(x.GetService<ProductFaker>(), int.Parse(Configuration["FakerCount"])))
+            .AddSingleton<OrderFaker>()
+            .AddSingleton<IOrdersService>(x => new FakeOrdersService(x.GetService<OrderFaker>(), int.Parse(Configuration["FakerCount"])));
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

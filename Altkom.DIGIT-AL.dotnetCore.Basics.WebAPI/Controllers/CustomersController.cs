@@ -12,8 +12,8 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
 {
     public class CustomersController : BaseController
     {
-        private readonly ICustomerService _customerService;
-        public CustomersController(ILogger<CustomersController> logger, ICustomerService customerService) : base(logger)
+        private readonly ICustomersService _customerService;
+        public CustomersController(ILogger<CustomersController> logger, ICustomersService customerService) : base(logger)
         {
             _customerService = customerService;
         }
