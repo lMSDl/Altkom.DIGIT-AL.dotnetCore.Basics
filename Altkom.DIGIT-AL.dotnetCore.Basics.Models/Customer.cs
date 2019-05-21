@@ -6,5 +6,8 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Models
     {
         public string FirstName {get; set;}
         public string LastName {get; set;}
+        public Gender Gender {get; set;}
+        public Guid? LayalityCard {get; set;}
+
     }
 }

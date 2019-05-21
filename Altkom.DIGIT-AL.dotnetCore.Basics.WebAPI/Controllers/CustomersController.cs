@@ -22,16 +22,19 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
         public async Task<IActionResult> Get()
         {
             Logger.LogDebug("GetCustomers");
-            return Ok(await _customerService.GetAsync());
+            var customers = (await _customerService.GetAsync()).ToList();
+            //customers.AddRange(await _customerService.GetAsync());
+            return Ok(customers);
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [Produces("application/xml")]
+        public async Task<IActionResult> Get(int id)
         {
             Logger.LogDebug($"GetRequest {id}");
             if(id == 5)
                 return NotFound();
-            return Ok($"value{id}");
+            return Ok(await _customerService.GetAsync(id));
         }
 
         [HttpPost]

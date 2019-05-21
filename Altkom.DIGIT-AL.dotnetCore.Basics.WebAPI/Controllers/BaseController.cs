@@ -6,6 +6,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Produces("application/xml")]
     public abstract class BaseController : ControllerBase {
         protected ILogger Logger {get;}
         protected BaseController(ILogger logger) {
