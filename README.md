@@ -136,3 +136,26 @@ logger.LogDebug("Hello");
 ```
 * Plik konfiguracyjny
 [appsettings.json](Core.Basics.Program/appsettings.json)
+
+## ASP.NET
+
+* Opcje serializacji Json
+``` c#
+services.AddMvc()
+   .AddJsonOptions(options => {
+      options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+      options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+      options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+      options.SerializerSettings.Converters.Add(new StringEnumConverter(camelCaseText: true));
+});
+```
+
+* Obsługa XML
+``` c#
+services.AddMvc().AddXmlSerializerFormatters();
+```
+``` c#
+[Produces("application/xml")]
+[ApiController]
+```
+
