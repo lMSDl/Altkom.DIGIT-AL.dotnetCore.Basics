@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="27.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.Models\Altkom.DIGIT-AL.dotnetCore.Basics.Models.csproj" />
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.IServices\Altkom.DIGIT-AL.dotnetCore.Basics.IServices.csproj" />
+  </ItemGroup>
+
+</Project>

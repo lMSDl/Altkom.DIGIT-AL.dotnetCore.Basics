@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.Models\Altkom.DIGIT-AL.dotnetCore.Basics.Models.csproj" />
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.FakeServices\Altkom.DIGIT-AL.dotnetCore.Basics.FakeServices.csproj" />
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.IServices\Altkom.DIGIT-AL.dotnetCore.Basics.IServices.csproj" />
   </ItemGroup>
 
 </Project>

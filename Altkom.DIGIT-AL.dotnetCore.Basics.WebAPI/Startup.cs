@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices;
+using Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices.Models;
+using Altkom.DIGIT_AL.dotnetCore.Basics.IServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +29,9 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton<CustomerFaker>();
+            services.AddSingleton<ICustomerService>(x => new FakeCustomerService(x.GetService<CustomerFaker>(), 10));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
