@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
 {
     public class ValuesController : BaseController
     {
+        public ValuesController(ILogger<ValuesController> logger) : base(logger)
+        {
+        }
+
         // GET api/values
         [HttpGet]
         public IActionResult Get()
         {
+            Logger.LogDebug("GetRequest");
             return Ok(new string[] { "value1", "value2" });
         }
 
@@ -19,6 +25,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
+            Logger.LogDebug($"GetRequest {id}");
             if(id == 5)
                 return NotFound();
             return Ok($"value{id}");
