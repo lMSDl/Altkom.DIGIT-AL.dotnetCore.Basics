@@ -12,7 +12,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices.Models
             RuleFor(x => x.Gender, y => y.PickRandom<Gender>());
             RuleFor(x => x.FirstName, (y, x) => y.Name.FirstName((Bogus.DataSets.Name.Gender)(x.Gender)));
             RuleFor(x => x.LastName, (y, x) => y.Name.LastName((Bogus.DataSets.Name.Gender)(x.Gender)));
-            RuleFor(x => x.LayalityCard, y => y.Random.Bool() ? Guid.NewGuid() : (Guid?)null);
+            RuleFor(x => x.LoyalityCard, y => y.Random.Bool() ? Guid.NewGuid() : (Guid?)null);
         }
 
         public static List<Customer> Generate() => new CustomerFaker().Generate(10);
