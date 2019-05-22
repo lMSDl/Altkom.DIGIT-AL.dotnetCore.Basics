@@ -62,7 +62,9 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
                 
         }
 
-        static async Task Main(string[] args)
+        static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
+
+        static async Task MainAsync(string[] args)
         {
             //ConsoleTest();
             //await TaskTests();
