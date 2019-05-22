@@ -9,6 +9,14 @@
   * WebAPI
   ```
   dotnet new webapi [-o <LOKALIZACJA> -n <NAZWA_PROEKTU>] [--no-https]
+  ``` 
+  * Razor Pages
+  ```
+  dotnet new webapp [-o <LOKALIZACJA> -n <NAZWA_PROEKTU>] [--no-https]
+  ``` 
+  * MVC
+  ```
+  dotnet new mvc [-o <LOKALIZACJA> -n <NAZWA_PROEKTU>] [--no-https]
   ```
   * biblioteki
   ```
