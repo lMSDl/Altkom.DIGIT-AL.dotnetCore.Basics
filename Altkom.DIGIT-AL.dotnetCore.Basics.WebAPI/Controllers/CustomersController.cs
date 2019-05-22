@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Altkom.DIGIT_AL.dotnetCore.Basics.Models;
 using Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices.Models;
 using Altkom.DIGIT_AL.dotnetCore.Basics.IServices;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
 {
@@ -19,6 +20,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
         }
 
         [HttpGet]
+        //[Authorize]
         public async Task<IActionResult> Get()
         {
             Logger.LogDebug("GetCustomers");
