@@ -11,12 +11,11 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebApp.Pages.Customers
         public IndexCustomers(ICustomersService customerService) : base(customerService)
         {
         }
+        public IList<Customer> Customers { get;set; }
 
-        public IList<Customer> Customers {get; set;}
-
-        public async Task OnGetAsync() {
+        public async Task OnGetAsync()
+        {
             Customers = (await CustomerService.GetAsync()).ToList();
         }
-
     }
 }

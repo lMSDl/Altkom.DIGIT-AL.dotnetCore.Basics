@@ -1,22 +1,37 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Altkom.DIGIT_AL.dotnetCore.Basics.IServices;
 using Altkom.DIGIT_AL.dotnetCore.Basics.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebApp.Pages.Customers
 {
-    public class DeleteCustomer : BasePageModel {
-        public DeleteCustomer(ICustomersService customerService) : base(customerService)
+    public class DeleteCustomer : BasePageModel
+    {
+        public DeleteCustomer(ICustomersService customersService) : base(customersService)
         {
         }
+        
+        [BindProperty]
+        public Customer Customer { get; set; }
 
-        public Customer Customer {get; set;}
-
-        public async Task OnGetAsync(int id) {
+        public async Task<IActionResult> OnGetAsync(int id)
+        {
             Customer = await CustomerService.GetAsync(id);
+
+            if (Customer == null)
+            {
+                return NotFound();
+            }
+            return Page();
         }
 
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            await CustomerService.DeleteAsync(id);
+
+            return RedirectToPage("./Index");
+        }
     }
 }

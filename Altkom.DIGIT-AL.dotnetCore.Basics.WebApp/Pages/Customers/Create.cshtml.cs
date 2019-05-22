@@ -12,20 +12,24 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebApp.Pages.Customers
         {
         }
 
-        [BindProperty]
-        public Customer Customer {get; set;}
-
-        public IActionResult OnGet() {
+        public IActionResult OnGet()
+        {
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync() {
-            if(!ModelState.IsValid)
-            return Page();
+        [BindProperty]
+        public Customer Customer { get; set; }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
             await CustomerService.AddAsync(Customer);
+
             return RedirectToPage("./Index");
         }
-
     }
 }
