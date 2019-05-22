@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using Altkom.DIGIT_AL.dotnetCore.Basics.IServices;
 using Altkom.DIGIT_AL.dotnetCore.Basics.Models;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI
             _logger = logger;
         }
 
-        public string Authenticate(User user)
+        public Task<string> Authenticate(User user)
         {
             if(user == null)
                 return null;
@@ -42,7 +43,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token); 
+            return Task.FromResult(tokenHandler.WriteToken(token)); 
         }
     }
 }

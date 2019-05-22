@@ -18,11 +18,11 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices
             _index = entities.Max(x => x.Id);
         }
         
-        public Task<int> AddAsync(T entity)
+        public Task<T> AddAsync(T entity)
         {
-            entity.Id = +_index;
+            entity.Id = ++_index;
             entities.Add(entity);
-            return Task.FromResult(_index);
+            return Task.FromResult(entity);
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -43,10 +43,9 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.FakeServices
            return Task.FromResult(entities.SingleOrDefault(x => x.Id == id));
         }
 
-        public async Task<bool> UpdateAsync(int id, T entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
-            if(await DeleteAsync(id)) {
-                entity.Id = id;
+            if(await DeleteAsync(entity.Id)) {
                 entities.Add(entity);
                 return true;
             }

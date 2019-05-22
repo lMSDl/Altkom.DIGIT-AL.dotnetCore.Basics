@@ -38,4 +38,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.Services\Altkom.DIGIT-AL.dotnetCore.Basics.Services.csproj" />
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.Models\Altkom.DIGIT-AL.dotnetCore.Basics.Models.csproj" />
+  </ItemGroup>
+
 </Project>

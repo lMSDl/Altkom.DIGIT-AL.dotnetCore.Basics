@@ -30,7 +30,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces("application/xml")]
+        //[Produces("application/xml")]
         public async Task<IActionResult> Get(int id)
         {
             Logger.LogDebug($"GetRequest {id}");
@@ -42,8 +42,8 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Customer customer)
         {
-            customer.Id = await _customerService.AddAsync(customer);
-            if(customer.Id == 0)
+            customer = await _customerService.AddAsync(customer);
+            if(customer == null)
                 return Conflict();
             return CreatedAtAction(nameof(Get), new {id = customer.Id}, customer);
         }
@@ -58,7 +58,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
             if(localCustomer == null)
                 return NotFound();
                 
-            if(!await _customerService.UpdateAsync(id, customer))
+            if(!await _customerService.UpdateAsync(customer))
                 return StatusCode(304);
 
             return Ok();

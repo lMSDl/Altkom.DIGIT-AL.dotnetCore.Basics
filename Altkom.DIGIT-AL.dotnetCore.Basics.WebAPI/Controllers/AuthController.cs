@@ -1,4 +1,5 @@
 
+using System.Threading.Tasks;
 using Altkom.DIGIT_AL.dotnetCore.Basics.IServices;
 using Altkom.DIGIT_AL.dotnetCore.Basics.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,8 +18,8 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Post(User user) {
-            var token = _authService.Authenticate(user);
+        public async Task<IActionResult> Post(User user) {
+            var token = await _authService.Authenticate(user);
 
             if(token == null)
                 return BadRequest(new {message = "Incorrect credentials"});

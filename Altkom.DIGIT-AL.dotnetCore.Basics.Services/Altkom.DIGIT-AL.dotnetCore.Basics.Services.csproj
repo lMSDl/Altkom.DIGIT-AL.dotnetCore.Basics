@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.IServices\Altkom.DIGIT-AL.dotnetCore.Basics.IServices.csproj" />
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.Models\Altkom.DIGIT-AL.dotnetCore.Basics.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Altkom.DIGIT_AL.dotnetCore.Basics.Services</RootNamespace>
+  </PropertyGroup>
+
+</Project>

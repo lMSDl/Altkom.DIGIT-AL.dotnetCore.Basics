@@ -95,7 +95,7 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.WebAPI
                 //     });
                 // });
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
         }

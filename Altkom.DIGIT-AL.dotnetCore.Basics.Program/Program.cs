@@ -8,6 +8,11 @@ using Altkom.DIGIT_AL.dotnetCore.Basics.Program.Services;
 using StructureMap;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net.Http;
+using Altkom.DIGIT_AL.dotnetCore.Basics.Services;
+using Newtonsoft.Json;
+using Altkom.DIGIT_AL.dotnetCore.Basics.Models;
+using System.Net.Http.Headers;
 
 namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
 {
@@ -59,9 +64,42 @@ namespace Altkom.DIGIT_AL.dotnetCore.Basics.Program
 
         static async Task Main(string[] args)
         {
-            ConsoleTest();
+            //ConsoleTest();
+            //await TaskTests();
 
-            await TaskTests();
+            using(var httpClient = new HttpClient()) {
+            httpClient.BaseAddress = new Uri("http://localhost:5000");
+
+            var user = new User{Username = "test1", Password = "test2"};
+            user.Token = await new AuthService(httpClient).Authenticate(user);
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+            //httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {user.Token}");
+
+            var customersService = new CustomersService(httpClient);
+            var customers = await customersService.GetAsync();
+            Console.WriteLine(JsonConvert.SerializeObject(customers));
+            
+            var customer = await customersService.GetAsync(2);
+            Console.WriteLine(JsonConvert.SerializeObject(customer));
+
+            customer.FirstName = customer.LastName;
+            customer = await customersService.AddAsync(customer);
+            Console.WriteLine(JsonConvert.SerializeObject(customer));
+
+            customer.FirstName = "Adam";
+            var result = await customersService.UpdateAsync(customer);
+            Console.WriteLine(result);
+            customer = await customersService.GetAsync(customer.Id);
+            Console.WriteLine(JsonConvert.SerializeObject(customer));
+
+            result = await customersService.DeleteAsync(customer.Id);
+            Console.WriteLine(result);
+
+            customers = await customersService.GetAsync();
+            Console.WriteLine(JsonConvert.SerializeObject(customers));
+
+            }
                         
             Console.ReadKey();
         }
