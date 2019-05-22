@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <RootNamespace>Altkom.DIGIT_AL.dotnetCore.Basics.WebApp</RootNamespace>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App"/>
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.Models\Altkom.DIGIT-AL.dotnetCore.Basics.Models.csproj" />
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.FakeServices\Altkom.DIGIT-AL.dotnetCore.Basics.FakeServices.csproj" />
+    <ProjectReference Include="..\Altkom.DIGIT-AL.dotnetCore.Basics.IServices\Altkom.DIGIT-AL.dotnetCore.Basics.IServices.csproj" />
+  </ItemGroup>
+  
+</Project>
